@@ -40,6 +40,7 @@ class ViewController: UIViewController {
         addDoneButtonTo(redNumberTextField, greenNumberTextField, blueNumberTextField)
     }
 
+    // Изменение цветов слайдерами
     @IBAction func modularRGBSlider(_ sender: UISlider) {
         
         switch sender.tag {
@@ -59,8 +60,8 @@ class ViewController: UIViewController {
         setViewColor()
     }
     
+    // Присваивание цвета View
     private func setViewColor() {
-
         colorView.backgroundColor = UIColor(red: CGFloat(redSlider.value),
                                             green: CGFloat(greenSlider.value),
                                             blue: CGFloat(blueSlider.value),
@@ -89,11 +90,58 @@ class ViewController: UIViewController {
         }
     }
     
+    // Значения RGB
     private func stringsSliderValue(from sliders: UISlider) -> String {
         return String(format: "%.2f", sliders.value)
     }
 
 }
+
+
+
+// MARK: - UITextFieldDelegate
+extension ViewController: UITextFieldDelegate {
+    
+    // Скрываем клавиатуру нажатием на "Done"
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // Скрытие клавиатуры по тапу за пределами Text Field
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        view.endEditing(true) // Скрывает клавиатуру, вызванную для любого объекта
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        guard let text = textField.text else { return }
+        
+        if let currentValue = Float(text) {
+            switch textField.tag {
+            case 0:
+                redSlider.value = currentValue
+                setValueLabel(for: redNumberLabel)
+            case 1:
+                greenSlider.value = currentValue
+                setValueLabel(for: greenNumberLabel)
+            case 2:
+                blueSlider.value = currentValue
+                setValueLabel(for: blueNumberLabel)
+            default: break
+            }
+            
+            setViewColor()
+        } else {
+            showAlert(title: "Wrong Format!", message: "Please enter correct value")
+        }
+    }
+    
+}
+
+
 
 extension ViewController {
     
@@ -120,6 +168,14 @@ extension ViewController {
     
     @objc private func didTapDone() {
         view.endEditing(true)
+    }
+    
+    // AlertController для показывания сообщения при неправильном вооде цифр, вызывается в другом extension
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAlertAction = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(okAlertAction)
+        present(alert, animated: true)
     }
 }
 
