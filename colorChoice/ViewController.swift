@@ -27,94 +27,99 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        colorView.backgroundColor = .black
-        // MARK: Slider
-        // red slider
-        redSlider.value = 0
-        redSlider.minimumValue = 0
-        redSlider.maximumValue = 1
+        
+        colorView.layer.cornerRadius = 15
+        
         redSlider.tintColor = .red
-        // green slider
-        greenSlider.value = 0
-        greenSlider.minimumValue = 0
-        greenSlider.maximumValue = 1
         greenSlider.tintColor = .green
-        // blue slider
-        blueSlider.value = 0
-        blueSlider.minimumValue = 0
-        blueSlider.maximumValue = 1
-        blueSlider.tintColor = .blue
+
+        setViewColor()
+        setValueLabel(for: redNumberLabel, greenNumberLabel, blueNumberLabel)
+        setValueTextField(for: redNumberTextField, greenNumberTextField, blueNumberTextField)
         
-        // MARK: TextField
-        redNumberTextField.text = String(redSlider.value)
-        redNumberTextField.textAlignment = .right
-        greenNumberTextField.text = String(redSlider.value)
-        greenNumberTextField.textAlignment = .right
-        blueNumberTextField.text = String(redSlider.value)
-        blueNumberTextField.textAlignment = .right
-        
-        // MARK: Label
-        redNumberLabel.text = String(redSlider.value)
-        redNumberLabel.textAlignment = .right
-        greenNumberLabel.text = String(redSlider.value)
-        greenNumberLabel.textAlignment = .right
-        blueNumberLabel.text = String(redSlider.value)
-        blueNumberLabel.textAlignment = .right
+        addDoneButtonTo(redNumberTextField, greenNumberTextField, blueNumberTextField)
     }
 
-    @IBAction func redSliderAction() {
-        redNumberTextField.text = String(redSlider.value)
-        redNumberLabel.text = String(redSlider.value)
+    @IBAction func modularRGBSlider(_ sender: UISlider) {
         
-        colorView.backgroundColor = .red
-        colorView.backgroundColor = colorView.backgroundColor?.withAlphaComponent(CGFloat(redSlider.value))
+        switch sender.tag {
+        case 0:
+            redNumberLabel.text = stringsSliderValue(from: sender)
+            redNumberTextField.text = stringsSliderValue(from: sender)
+        case 1:
+            greenNumberLabel.text = stringsSliderValue(from: sender)
+            greenNumberTextField.text = stringsSliderValue(from: sender)
+        case 2:
+            blueNumberLabel.text = stringsSliderValue(from: sender)
+            blueNumberTextField.text = stringsSliderValue(from: sender)
+        default:
+            break
+        }
         
-        colorViewColor()
+        setViewColor()
     }
     
-    @IBAction func greenSliderAction() {
-        greenNumberTextField.text = String(greenSlider.value)
-        greenNumberLabel.text = String(greenSlider.value)
-        
-        colorView.backgroundColor = .green
-        colorView.backgroundColor = colorView.backgroundColor?.withAlphaComponent(CGFloat(greenSlider.value))
-        
-        colorViewColor()
-    }
-    
-    @IBAction func blueSliderAction() {
-        blueNumberTextField.text = String(blueSlider.value)
-        blueNumberLabel.text = String(blueSlider.value)
-        
-        colorView.backgroundColor = .blue
-        colorView.backgroundColor = colorView.backgroundColor?.withAlphaComponent(CGFloat(blueSlider.value))
-        
-        colorViewColor()
-    }
-    
-    func colorViewColor () {
+    private func setViewColor() {
 
-        colorView.backgroundColor = UIColor(
-        red: CGFloat(redSlider.value),
-        green: CGFloat(greenSlider.value),
-        blue: CGFloat(blueSlider.value),
-        alpha:1.0)
-
+        colorView.backgroundColor = UIColor(red: CGFloat(redSlider.value),
+                                            green: CGFloat(greenSlider.value),
+                                            blue: CGFloat(blueSlider.value),
+                                            alpha:1.0)
     }
     
+    private func setValueTextField(for textFields: UITextField...) {
+        textFields.forEach { textFields in
+            switch textFields.tag {
+            case 0: redNumberTextField.text = stringsSliderValue(from: redSlider)
+            case 1: greenNumberTextField.text = stringsSliderValue(from: greenSlider)
+            case 2: blueNumberTextField.text = stringsSliderValue(from: blueSlider)
+            default: break
+            }
+        }
+    }
     
+    private func setValueLabel(for labels: UILabel...) {
+        labels.forEach { labels in
+            switch labels.tag {
+            case 0: redNumberLabel.text = stringsSliderValue(from: redSlider)
+            case 1: greenNumberLabel.text = stringsSliderValue(from: greenSlider)
+            case 2: blueNumberLabel.text = stringsSliderValue(from: blueSlider)
+            default: break
+            }
+        }
+    }
     
-//    @IBAction func sliderValueChanged(_ sender: UISlider) {
-//        let currentValue = Int(sender.value)
-//        let backgroundColor = UIColor(
-//            red: CGFloat(currentValue),
-//            green: CGFloat(currentValue),
-//            blue: CGFloat(currentValue),
-//            alpha:1.0
-//        )
-//        self.view.backgroundColor = backgroundColor
-//
-//    }
+    private func stringsSliderValue(from sliders: UISlider) -> String {
+        return String(format: "%.2f", sliders.value)
+    }
 
+}
+
+extension ViewController {
+    
+    // Метод для отображения кнопки "Готово" на цифровой клавиатуре
+    private func addDoneButtonTo(_ textFields: UITextField...) {
+        
+        textFields.forEach { textField in
+            let keyboardToolbar = UIToolbar()
+            textField.inputAccessoryView = keyboardToolbar
+            keyboardToolbar.sizeToFit()
+            
+            let doneButton = UIBarButtonItem(title:"Done",
+                                             style: .done,
+                                             target: self,
+                                             action: #selector(didTapDone))
+            
+            let flexBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
+                                                target: nil,
+                                                action: nil)
+            
+            keyboardToolbar.items = [flexBarButton, doneButton]
+        }
+    }
+    
+    @objc private func didTapDone() {
+        view.endEditing(true)
+    }
 }
 
