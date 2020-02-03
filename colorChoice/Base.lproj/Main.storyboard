@@ -163,9 +163,8 @@
                                     <constraint firstItem="sWG-Lx-LbN" firstAttribute="leading" secondItem="6np-3h-zbV" secondAttribute="trailing" constant="15" id="v0f-3G-wxo"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tjY-gw-Eam">
-                                <rect key="frame" x="154" y="524" width="107" height="42"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tjY-gw-Eam">
+                                <rect key="frame" x="177" y="524" width="60" height="44"/>
                                 <color key="backgroundColor" red="0.14139977100000001" green="0.29585275049999998" blue="0.5764992833" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -179,12 +178,14 @@
                         </subviews>
                         <color key="backgroundColor" red="0.14139977100000001" green="0.29585275049999998" blue="0.5764992833" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
+                            <constraint firstItem="tjY-gw-Eam" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="H7S-3K-ghO"/>
                             <constraint firstItem="fVd-rB-F60" firstAttribute="top" secondItem="zho-5R-Qdd" secondAttribute="bottom" constant="81" id="PfH-9c-C1l"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fVd-rB-F60" secondAttribute="trailing" constant="16" id="Reg-QT-Rfe"/>
                             <constraint firstItem="fVd-rB-F60" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="SnD-XI-xN7"/>
                             <constraint firstItem="zho-5R-Qdd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="dXV-0I-17T"/>
                             <constraint firstItem="zho-5R-Qdd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="liw-oq-EeF"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zho-5R-Qdd" secondAttribute="trailing" constant="16" id="ntu-uZ-E06"/>
+                            <constraint firstItem="tjY-gw-Eam" firstAttribute="top" secondItem="fVd-rB-F60" secondAttribute="bottom" constant="135" id="sd1-7E-54i"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
