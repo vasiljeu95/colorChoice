@@ -8,9 +8,16 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+protocol ViewControllerDelegate {
+    func setColor(_ color: UIColor)
+}
 
-    
+protocol ColorData {
+    var currentColor: UIColor? { get set }
+}
+
+class ViewController: UIViewController, ColorData {
+
     @IBOutlet var redNumberLabel: UILabel!
     @IBOutlet var greenNumberLabel: UILabel!
     @IBOutlet var blueNumberLabel: UILabel!
@@ -24,6 +31,9 @@ class ViewController: UIViewController {
     @IBOutlet var blueNumberTextField: UITextField!
     
     @IBOutlet var colorView: UIView!
+    
+    var delegate: ViewControllerDelegate?
+    var currentColor: UIColor?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +68,11 @@ class ViewController: UIViewController {
         }
         
         setViewColor()
+    }
+    
+    @IBAction func doneButton() {
+        delegate?.setColor(colorView.backgroundColor ?? .white)
+        dismiss(animated: true)
     }
     
     // Присваивание цвета View
